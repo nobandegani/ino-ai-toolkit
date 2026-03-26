@@ -23,3 +23,30 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+  ai-toolkit-local:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8675:8675"
+    volumes:
+      - ./:/app/ai-toolkit
+      - docker/start.sh:/start.sh
+      - .data/huggingface/hub:/root/.cache/huggingface/hub
+      #- .data/aitk_db.db:/app/ai-toolkit/aitk_db.db
+      - .data/datasets:/app/ai-toolkit/datasets
+      - .data/output:/app/ai-toolkit/output
+      - .data/config:/app/ai-toolkit/config
+    environment:
+      - AI_TOOLKIT_AUTH=${AI_TOOLKIT_AUTH:-password}
+      - NODE_ENV=production
+      - TZ=UTC
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
