@@ -107,3 +107,44 @@ Example configs are in `config/examples/`.
 ## Supported Model Architectures
 
 Defined as `ModelArch` literal type in config_modules: `sd1`, `sd2`, `sd3`, `sdxl`, `pixart`, `pixart_sigma`, `auraflow`, `flux`, `flex1`, `flex2`, `lumina2`, `vega`, `ssd`, `wan21`.
+
+## Feature Plan: S3-Compatible Storage Upload
+
+Upload trained LoRAs and samples to S3-compatible storage (AWS S3, MinIO, Backblaze B2, Cloudflare R2, etc.) using `inopyutils.sync_folder`.
+
+### S3 Settings (UI Settings Page)
+
+User configures these in the web UI settings:
+- `S3_ENDPOINT_URL`
+- `S3_REGION_NAME`
+- `S3_ACCESS_KEY`
+- `S3_ACCESS_SECRET`
+- `S3_BUCKET_NAME`
+- `S3_ROOT_PATH`
+
+### UI: Training Job Page
+
+- Add an "Upload to S3" toggle button at the top of the new training job page, positioned to the left of the LoRA trainer combo box.
+- The toggle is only available/visible when all S3 settings are configured.
+
+### Sync Triggers
+
+When "Upload to S3" is enabled for a job, call `sync_folder` at these points:
+1. **Every save checkpoint** — when `save_every` triggers a LoRA save
+2. **Every sample generation** — when `sample_every` triggers sample images
+3. **Job completion** — final sync at the end of training
+
+### S3 Path Structure
+
+Remote path: `{S3_ROOT_PATH}/ai-toolkit/{Training Name}/`
+
+This mirrors the local training output folder structure so saves and samples are organized under the training name.
+
+### Implementation Touchpoints
+
+- **Python dependency**: Add `inopyutils` to `requirements.txt`
+- **Settings API**: `ui/src/app/api/settings/` — store/retrieve S3 config
+- **Settings UI**: Add S3 configuration fields to the settings page
+- **Job creation UI**: Add "Upload to S3" toggle on training job page
+- **Training process**: Hook into save and sample events in `BaseSDTrainProcess.py` to call `sync_folder`
+- **Job config**: Pass the S3 upload flag through the job config so the Python training process knows to sync
