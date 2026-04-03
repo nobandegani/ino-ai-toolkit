@@ -16,7 +16,8 @@
       "Bash(docker stop:*)",
       "Bash(docker start:*)",
       "Bash(docker volume:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
