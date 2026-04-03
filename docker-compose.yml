@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   ai-toolkit:
     image: ostris/aitoolkit:latest
@@ -25,6 +23,7 @@ services:
               capabilities: [gpu]
 
   ai-toolkit-local:
+    container_name: ai-toolkit-local
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -33,14 +32,14 @@ services:
       - "8675:8675"
     volumes:
       - ./:/app/ai-toolkit
-      - docker/start.sh:/start.sh
-      - .data/huggingface/hub:/root/.cache/huggingface/hub
-      #- .data/aitk_db.db:/app/ai-toolkit/aitk_db.db
-      - .data/datasets:/app/ai-toolkit/datasets
-      - .data/output:/app/ai-toolkit/output
-      - .data/config:/app/ai-toolkit/config
+      - ./docker/start.sh:/start.sh
+      - ./.data/huggingface/hub:/root/.cache/huggingface/hub
+      - ./.data/aitk_db.db:/app/ai-toolkit/aitk_db.db
+      - ./.data/datasets:/app/ai-toolkit/datasets
+      - ./.data/output:/app/ai-toolkit/output
+      - ./.data/config:/app/ai-toolkit/config
     environment:
-      - AI_TOOLKIT_AUTH=${AI_TOOLKIT_AUTH:-password}
+      - AI_TOOLKIT_AUTH=
       - NODE_ENV=production
       - TZ=UTC
     deploy:
