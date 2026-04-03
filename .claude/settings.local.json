@@ -18,7 +18,9 @@
       "Bash(docker volume:*)",
       "Bash(npx tsc:*)",
       "Bash(npm install:*)",
-      "Bash(python -c \"import ast; ast.parse\\(open\\('extensions_built_in/sd_trainer/SDTrainer.py'\\).read\\(\\)\\); print\\('OK'\\)\")"
+      "Bash(python -c \"import ast; ast.parse\\(open\\('extensions_built_in/sd_trainer/SDTrainer.py'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('extensions/ino_s3_sync/InoS3SyncTrainer.py'\\).read\\(\\)\\); ast.parse\\(open\\('extensions/ino_s3_sync/__init__.py'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('extensions_built_in/sd_trainer/SDTrainer.py'\\).read\\(\\)\\); ast.parse\\(open\\('toolkit/util/s3_helper.py'\\).read\\(\\)\\); print\\('OK'\\)\")"
     ]
   }
 }
