@@ -161,12 +161,24 @@ export default function TrainingForm() {
     if (status === 'saving') return;
     setStatus('saving');
 
+    const jobConfigToSave = objectCopy(jobConfig);
+    if (jobConfigToSave.meta?.s3_sync && s3Configured) {
+      const rootPath = (settings.S3_ROOT_PATH || '').replace(/\/+$/, '');
+      const s3PathKey = rootPath ? `${rootPath}/output/${jobConfigToSave.config.name}` : `output/${jobConfigToSave.config.name}`;
+      jobConfigToSave.meta.s3_endpoint_url = settings.S3_ENDPOINT_URL;
+      jobConfigToSave.meta.s3_region_name = settings.S3_REGION_NAME;
+      jobConfigToSave.meta.s3_bucket_name = settings.S3_BUCKET_NAME;
+      jobConfigToSave.meta.s3_access_key = settings.S3_ACCESS_KEY;
+      jobConfigToSave.meta.s3_access_secret = settings.S3_ACCESS_SECRET;
+      jobConfigToSave.meta.s3_path_key = s3PathKey;
+    }
+
     apiClient
       .post('/api/jobs', {
         id: runId,
-        name: jobConfig.config.name,
+        name: jobConfigToSave.config.name,
         gpu_ids: gpuIDs,
-        job_config: jobConfig,
+        job_config: jobConfigToSave,
       })
       .then(res => {
         setStatus('success');

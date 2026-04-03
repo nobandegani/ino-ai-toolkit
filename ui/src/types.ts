@@ -245,6 +245,12 @@ export interface MetaConfig {
   name: string;
   version: string;
   s3_sync?: boolean;
+  s3_endpoint_url?: string;
+  s3_region_name?: string;
+  s3_bucket_name?: string;
+  s3_access_key?: string;
+  s3_access_secret?: string;
+  s3_path_key?: string;
 }
 
 export interface JobConfig {
