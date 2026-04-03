@@ -15,7 +15,8 @@
       "Bash(docker update:*)",
       "Bash(docker stop:*)",
       "Bash(docker start:*)",
-      "Bash(docker volume:*)"
+      "Bash(docker volume:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

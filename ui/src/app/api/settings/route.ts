@@ -29,9 +29,19 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { HF_TOKEN, TRAINING_FOLDER, DATASETS_FOLDER } = body;
+    const {
+      HF_TOKEN,
+      TRAINING_FOLDER,
+      DATASETS_FOLDER,
+      S3_ENDPOINT_URL,
+      S3_REGION_NAME,
+      S3_BUCKET_NAME,
+      S3_ACCESS_KEY,
+      S3_ACCESS_SECRET,
+      S3_ROOT_PATH,
+    } = body;
 
-    // Upsert both settings
+    // Upsert all settings
     await Promise.all([
       prisma.settings.upsert({
         where: { key: 'HF_TOKEN' },
@@ -47,6 +57,36 @@ export async function POST(request: Request) {
         where: { key: 'DATASETS_FOLDER' },
         update: { value: DATASETS_FOLDER },
         create: { key: 'DATASETS_FOLDER', value: DATASETS_FOLDER },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_ENDPOINT_URL' },
+        update: { value: S3_ENDPOINT_URL },
+        create: { key: 'S3_ENDPOINT_URL', value: S3_ENDPOINT_URL },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_REGION_NAME' },
+        update: { value: S3_REGION_NAME },
+        create: { key: 'S3_REGION_NAME', value: S3_REGION_NAME },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_BUCKET_NAME' },
+        update: { value: S3_BUCKET_NAME },
+        create: { key: 'S3_BUCKET_NAME', value: S3_BUCKET_NAME },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_ACCESS_KEY' },
+        update: { value: S3_ACCESS_KEY },
+        create: { key: 'S3_ACCESS_KEY', value: S3_ACCESS_KEY },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_ACCESS_SECRET' },
+        update: { value: S3_ACCESS_SECRET },
+        create: { key: 'S3_ACCESS_SECRET', value: S3_ACCESS_SECRET },
+      }),
+      prisma.settings.upsert({
+        where: { key: 'S3_ROOT_PATH' },
+        update: { value: S3_ROOT_PATH },
+        create: { key: 'S3_ROOT_PATH', value: S3_ROOT_PATH },
       }),
     ]);
 
