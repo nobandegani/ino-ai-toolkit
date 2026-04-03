@@ -3,6 +3,16 @@ import { ConfigDoc } from '@/types';
 import { IoFlaskSharp } from 'react-icons/io5';
 
 const docs: { [key: string]: ConfigDoc } = {
+  'meta.s3_sync': {
+    title: 'Sync Training Files to S3',
+    description: (
+      <>
+        If enabled, will upload the training files and samples to the S3 bucket under{' '}
+        <code>S3_ROOT_PATH/output/{'<job name>'}</code>. Syncs happen on every checkpoint save, every sample generation,
+        and at job completion. S3 settings must be configured in the Settings page.
+      </>
+    ),
+  },
   'config.name': {
     title: 'Training Name',
     description: (

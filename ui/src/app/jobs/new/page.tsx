@@ -20,6 +20,7 @@ import SimpleJob from './SimpleJob';
 import AdvancedJob from './AdvancedJob';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { apiClient } from '@/utils/api';
+import { Checkbox } from '@/components/formInputs';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -148,6 +149,14 @@ export default function TrainingForm() {
     }
   }, [settings, isSettingsLoaded]);
 
+  const s3Configured =
+    isSettingsLoaded &&
+    !!settings.S3_ENDPOINT_URL &&
+    !!settings.S3_REGION_NAME &&
+    !!settings.S3_BUCKET_NAME &&
+    !!settings.S3_ACCESS_KEY &&
+    !!settings.S3_ACCESS_SECRET;
+
   const saveJob = async () => {
     if (status === 'saving') return;
     setStatus('saving');
@@ -214,6 +223,17 @@ export default function TrainingForm() {
                 Import Config
               </Button>
             </div>
+            <div className="mx-4 bg-gray-200 dark:bg-gray-800 w-1 h-6"></div>
+          </>
+        )}
+        {!showAdvancedView && s3Configured && (
+          <>
+            <Checkbox
+              label="S3 Sync"
+              checked={jobConfig.meta?.s3_sync || false}
+              docKey="meta.s3_sync"
+              onChange={value => setJobConfig(value, 'meta.s3_sync')}
+            />
             <div className="mx-4 bg-gray-200 dark:bg-gray-800 w-1 h-6"></div>
           </>
         )}

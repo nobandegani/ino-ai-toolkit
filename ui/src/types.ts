@@ -244,6 +244,7 @@ export interface ConfigObject {
 export interface MetaConfig {
   name: string;
   version: string;
+  s3_sync?: boolean;
 }
 
 export interface JobConfig {
