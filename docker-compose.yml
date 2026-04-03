@@ -26,21 +26,13 @@ services:
     container_name: ai-toolkit-local
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/Dockerfile-local
     restart: unless-stopped
     ports:
       - "8675:8675"
-    volumes:
-      - ./:/app/ai-toolkit
-      - ./docker/start.sh:/start.sh
-      - ./.data/huggingface/hub:/root/.cache/huggingface/hub
-      - ./.data/aitk_db.db:/app/ai-toolkit/aitk_db.db
-      - ./.data/datasets:/app/ai-toolkit/datasets
-      - ./.data/output:/app/ai-toolkit/output
-      - ./.data/config:/app/ai-toolkit/config
     environment:
       - AI_TOOLKIT_AUTH=
-      - NODE_ENV=production
+      - NODE_ENV=development
       - TZ=UTC
     deploy:
       resources:
