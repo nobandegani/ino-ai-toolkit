@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   ai-toolkit:
     image: ostris/aitoolkit:latest
@@ -21,23 +23,3 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-
-  ai-toolkit-local:
-    container_name: ai-toolkit-local
-    build:
-      context: .
-      dockerfile: docker/Dockerfile-local
-    restart: unless-stopped
-    ports:
-      - "8675:8675"
-    environment:
-      - AI_TOOLKIT_AUTH=
-      - NODE_ENV=development
-      - TZ=UTC
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [ gpu ]
