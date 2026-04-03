@@ -17,7 +17,8 @@
       "Bash(docker start:*)",
       "Bash(docker volume:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('extensions_built_in/sd_trainer/SDTrainer.py'\\).read\\(\\)\\); print\\('OK'\\)\")"
     ]
   }
 }
