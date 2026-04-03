@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /E/likeness/spark/python/ai-toolkit -maxdepth 2 -type f -name *.md -o -name *.py -o -name *.toml -o -name *.cfg -o -name *.ini -o -name *.yaml -o -name *.yml)",
+      "Bash(xargs grep:*)",
+      "Bash(xargs wc:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Read(//mnt/e/likeness/spark/python/**)",
+      "Bash(docker compose:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker exec:*)",
+      "Bash(docker update:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker start:*)",
+      "Bash(docker volume:*)"
+    ]
+  }
+}
